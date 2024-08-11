@@ -5,6 +5,7 @@ export const NavbarContainer = styled.div`
   height: 100vh;
   overflow-y: auto;
   position: relative;
+  scrollbar-width: none;
 `;
 
 export const NavSideBar = styled.nav`
@@ -30,4 +31,16 @@ export const KeyboardItem = styled.kbd`
   border: 1px solid;
   padding: 0;
   color: ${theme.colors.cream};
+`;
+
+export const ItemContainer = styled.li`
+  :hover {
+    opacity: "1";
+    border-color: ${theme.colors.white};
+    color: ${theme.colors.gold};
+  }
+`;
+
+export const Anchor = styled.a<{ currentLocation: boolean }>`
+  color: ${(props) => (props.currentLocation ? `${theme.colors.aqua}` : "")};
 `;

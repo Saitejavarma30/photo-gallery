@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AccountCircle, ArrowOutward, CopyAll } from "@mui/icons-material";
-import { KeyboardItem } from "./styles";
+import { Anchor, ItemContainer, KeyboardItem } from "./styles";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Popover } from "@mui/material";
 import Popup from "../popup";
@@ -23,15 +23,23 @@ const NavItem: React.FC<NavItemProps> = ({
   contact = false,
 }) => {
   const [copyStatus, setCopyStatus] = useState(false); // To indicate if the text was copied
+  const [isActive, setIsActive] = useState(false);
 
   const onCopyText = () => {
-    console.log("here");
     setCopyStatus(true);
     setTimeout(() => {
       console.log(copyStatus);
       setCopyStatus(false);
     }, 2000); // Reset status after 2 seconds
   };
+  console.log(window.location.pathname);
+  useEffect(() => {
+    if (window.location.pathname === href) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+    }
+  }, [isActive]);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "E" || event.key === "e") {
@@ -58,7 +66,7 @@ const NavItem: React.FC<NavItemProps> = ({
         <label className="flex align-center items-center peer-disabled:cursor-not-allowed peer-disabled:opacity-70 uppercase text-xs tracking-widest text-text/50 font-semibold ml-3 my-2">
           Connect
         </label>
-        <li className="nav-item">
+        <ItemContainer className="nav-item">
           <CopyToClipboard
             text={"saitejavarmaj30@gmail.com"}
             onCopy={onCopyText}
@@ -84,14 +92,13 @@ const NavItem: React.FC<NavItemProps> = ({
               </KeyboardItem>
             </div>
           </CopyToClipboard>
-        </li>
+        </ItemContainer>
       </>
     );
-  }
-  if (href.toLowerCase() === "") {
+  } else if (href.toLowerCase() === "/") {
     return (
       <>
-        <li className="nav-item">
+        <ItemContainer className="nav-item">
           <a
             className="group gap-3 flex align-center items-center whitespace-nowrap text-base sm:text-sm font-medium transition-colors focus-visible:outline-none focus-visible:shadow-focus hover:bg-accent/10 active:bg-accent/20 focus:ring-1 ring-inset focus:ring-accent/30 focus:bg-accent/05 disabled:pointer-events-none disabled:opacity-50 text-text px-3 py-2 rounded-lg w-full justify-start false"
             data-hotkey="o"
@@ -106,7 +113,7 @@ const NavItem: React.FC<NavItemProps> = ({
               {letter}
             </KeyboardItem>
           </a>
-        </li>
+        </ItemContainer>
         <label className="flex align-center items-center peer-disabled:cursor-not-allowed peer-disabled:opacity-70 uppercase text-xs tracking-widest text-text/50 font-semibold ml-3 my-2">
           Browse
         </label>
@@ -114,11 +121,12 @@ const NavItem: React.FC<NavItemProps> = ({
     );
   } else {
     return (
-      <li className="nav-item">
-        <a
+      <ItemContainer className="nav-item">
+        <Anchor
           className="group gap-3 flex align-center items-center whitespace-nowrap text-base sm:text-sm font-medium focus-visible:outline-none  disabled:pointer-events-none disabled:opacity-50 text-text h-11 px-3 py-2 rounded-lg w-full justify-start false"
           data-hotkey="o"
           href={`${href.toLowerCase()}`}
+          currentLocation={isActive}
         >
           {icon}
           <p className="col-span-4">{text}</p>
@@ -131,8 +139,8 @@ const NavItem: React.FC<NavItemProps> = ({
           >
             {letter}
           </KeyboardItem>
-        </a>
-      </li>
+        </Anchor>
+      </ItemContainer>
     );
   }
 };
