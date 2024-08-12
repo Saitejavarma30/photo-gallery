@@ -7,7 +7,7 @@ import {
   GitHub,
   LinkedIn,
   Mail,
-  PhotoLibrary,
+  PhotoCamera,
   School,
   Work,
 } from "@mui/icons-material";
@@ -27,7 +27,7 @@ const navItems = [
   },
   {
     icon: <School color="inherit" />,
-    text: "Education & Experince",
+    text: "Background",
     letter: "B",
     href: "/background",
   },
@@ -38,7 +38,7 @@ const navItems = [
     href: "/projects",
   },
   {
-    icon: <PhotoLibrary color="inherit" />,
+    icon: <PhotoCamera color="inherit" />,
     text: "Photos",
     letter: "O",
     href: "/photos",

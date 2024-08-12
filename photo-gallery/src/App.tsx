@@ -14,7 +14,6 @@ function App() {
         </div>
         <div className="col-span-9 overflow-y-auto h-screen">
           <Hero />
-          <Hero />
         </div>
       </AppContainer>
     </>

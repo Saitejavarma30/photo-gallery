@@ -34,6 +34,7 @@ export const KeyboardItem = styled.kbd`
 `;
 
 export const ItemContainer = styled.li`
+  cursor: pointer;
   :hover {
     opacity: "1";
     border-color: ${theme.colors.white};

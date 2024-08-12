@@ -28,11 +28,9 @@ const NavItem: React.FC<NavItemProps> = ({
   const onCopyText = () => {
     setCopyStatus(true);
     setTimeout(() => {
-      console.log(copyStatus);
       setCopyStatus(false);
     }, 2000); // Reset status after 2 seconds
   };
-  console.log(window.location.pathname);
   useEffect(() => {
     if (window.location.pathname === href) {
       setIsActive(true);
@@ -99,10 +97,11 @@ const NavItem: React.FC<NavItemProps> = ({
     return (
       <>
         <ItemContainer className="nav-item">
-          <a
+          <Anchor
             className="group gap-3 flex align-center items-center whitespace-nowrap text-base sm:text-sm font-medium transition-colors focus-visible:outline-none focus-visible:shadow-focus hover:bg-accent/10 active:bg-accent/20 focus:ring-1 ring-inset focus:ring-accent/30 focus:bg-accent/05 disabled:pointer-events-none disabled:opacity-50 text-text px-3 py-2 rounded-lg w-full justify-start false"
             data-hotkey="o"
             href={`${href.toLowerCase()}`}
+            currentLocation={isActive}
           >
             <p className="col-span-5">{text}</p>
             {contact && <ArrowOutward color="inherit" />}
@@ -112,7 +111,7 @@ const NavItem: React.FC<NavItemProps> = ({
             >
               {letter}
             </KeyboardItem>
-          </a>
+          </Anchor>
         </ItemContainer>
         <label className="flex align-center items-center peer-disabled:cursor-not-allowed peer-disabled:opacity-70 uppercase text-xs tracking-widest text-text/50 font-semibold ml-3 my-2">
           Browse
