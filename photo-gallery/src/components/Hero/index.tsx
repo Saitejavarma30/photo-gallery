@@ -3,17 +3,28 @@ import {
   GreetingContainer,
   Greetingtext,
   HeroContainer,
+  HeroContentContainer,
   Heroheader,
   HeroHeaderContainer,
   HeroHeaderText,
+  HeroLocationContainer,
 } from "./styles";
 import { MoonStar, Sun, Sunrise, Sunset } from "lucide-react";
 import moment from "moment";
 import { getGreeting } from "../../utils";
 import { Avatar } from "../Avatar";
 import ImageContainer from "../ImageContainer";
+import { useData } from "./useDate";
 
 const Hero = ({ className }: { className?: string }) => {
+  const currentMonthIndex = moment().month();
+  const currentMonthName = moment().format("MMMM"); // Full month name (e.g., 'August')
+  const currentMonthShortName = moment().format("MMM"); // Short month name (e.g., 'Aug')
+  useData();
+
+  // Get the current date of the month
+  const currentDate = moment().date();
+
   const getGreetingIcon = () => {
     const hour = moment().hour();
 
@@ -41,6 +52,14 @@ const Hero = ({ className }: { className?: string }) => {
         </Heroheader>
         <ImageContainer />
       </HeroHeaderContainer>
+      <HeroContentContainer className="grid grid-cols-4 gap-2">
+        <HeroLocationContainer className="col-span-1">
+          {currentMonthName}
+        </HeroLocationContainer>
+        <HeroLocationContainer className="col-span-1">
+          {currentMonthName}
+        </HeroLocationContainer>
+      </HeroContentContainer>
     </HeroContainer>
   );
 };

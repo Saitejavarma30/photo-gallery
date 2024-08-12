@@ -44,7 +44,7 @@ const ImageContainer = () => {
 
   return (
     <Canvas shadows camera={{ position: cameraPosition, fov: 30 }}>
-      <OrbitControls />
+      <OrbitControls enableRotate={false} />
       <CameraController targetRef={objectRef} />
       <group position={[0, -1, 0]} ref={objectRef}>
         <Avatar />

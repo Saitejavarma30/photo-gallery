@@ -17,7 +17,7 @@ export const HeroHeaderContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 70%;
+  height: 80%;
 `;
 export const Heroheader = styled.h1`
   font-optical-sizing: auto;
@@ -31,3 +31,20 @@ export const HeroHeaderText = styled.span`
 `;
 
 export const Greetingtext = styled.div``;
+export const HeroContentContainer = styled.div``;
+
+export const HeroLocationContainer = styled.nav`
+  border-color: ${theme.colors.grey};
+  /* border: 1px solid; */
+  height: max-content;
+  z-index: 1;
+  background-color: ${theme.colors.grey};
+  opacity: 0.8;
+  justify-content: center;
+  padding: auto;
+  color: ${theme.colors.white};
+
+  li {
+    color: ${theme.colors.white};
+  }
+`;
