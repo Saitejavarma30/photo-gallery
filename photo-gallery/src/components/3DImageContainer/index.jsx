@@ -3,7 +3,6 @@ import { Canvas, useThree } from "@react-three/fiber";
 import { Avatar } from "../Avatar";
 import { OrbitControls } from "@react-three/drei";
 import { gsap } from "gsap";
-import * as THREE from "three";
 
 const CameraController = ({ targetRef }) => {
   const { camera } = useThree();
@@ -44,7 +43,7 @@ const ImageContainer = () => {
 
   return (
     <Canvas shadows camera={{ position: cameraPosition, fov: 30 }}>
-      <OrbitControls enableRotate={false} />
+      <OrbitControls enableRotate={false} enableZoom={false} />
       <CameraController targetRef={objectRef} />
       <group position={[0, -1, 0]} ref={objectRef}>
         <Avatar />

@@ -1,60 +1,53 @@
-import { fetchWeatherApi } from "openmeteo";
+import { useEffect, useState } from "react";
 
-export const useData = async () => {
-  const params = {
-    latitude: 12.9716,
-    longitude: 77.5946,
-    current: [
-      "temperature_2m",
-      "apparent_temperature",
-      "precipitation",
-      "weather_code",
-    ],
-    forecast_days: 1,
-  };
-  const url = "https://api.open-meteo.com/v1/forecast";
-  const responses = await fetchWeatherApi(url, params);
-  console.log(JSON.stringify(responses));
-
-  // Helper function to form time ranges
-  const range = (start: number, stop: number, step: number) =>
-    Array.from({ length: (stop - start) / step }, (_, i) => start + i * step);
-
-  // Process first location. Add a for-loop for multiple locations or weather models
-  const response = responses[0];
-
-  //   // Attributes for timezone and location
-  //   const utcOffsetSeconds = response.utcOffsetSeconds();
-  //   const timezone = response.timezone();
-  //   const timezoneAbbreviation = response.timezoneAbbreviation();
-  //   const latitude = response.latitude();
-  //   const longitude = response.longitude();
-
-  //   const hourly = response.hourly()!;
-
-  //   // Note: The order of weather variables in the URL query and the indices below need to match!
-  //   const weatherData = {
-  //     hourly: {
-  //       time: range(
-  //         Number(hourly.time()),
-  //         Number(hourly.timeEnd()),
-  //         hourly.interval()
-  //       ).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
-  //       temperature2m: hourly.variables(0)!.valuesArray()!,
-  //       apparentTemperature: hourly.variables(1)!.valuesArray()!,
-  //       precipitation: hourly.variables(2)!.valuesArray()!,
-  //       weatherCode: hourly.variables(3)!.valuesArray()!,
-  //     },
-  //   };
-
-  //   // `weatherData` now contains a simple structure with arrays for datetime and weather data
-  //   for (let i = 0; i < weatherData.hourly.time.length; i++) {
-  //     console.log(
-  //       weatherData.hourly.time[i].toISOString(),
-  //       weatherData.hourly.temperature2m[i],
-  //       weatherData.hourly.apparentTemperature[i],
-  //       weatherData.hourly.precipitation[i],
-  //       weatherData.hourly.weatherCode[i]
-  //     );
-  //   }
+export type WeatherData = {
+  latitude: string;
+  longitude: string;
+  timezone: string;
+  weatherCode: number;
+  temperature: string;
+  precipitation: string;
+  wind_speed_10m: string;
 };
+
+const fetchWeatherData = async (): Promise<WeatherData> => {
+  const response = await fetch(
+    "https://api.open-meteo.com/v1/forecast?latitude=12.9716&longitude=77.5946&current=temperature_2m,weather_code,precipitation,wind_speed_10m&timezone=auto&forecast_days=1"
+  );
+  const weather = await response.json();
+  console.log(weather);
+  return {
+    latitude: `${weather.latitude}°N`,
+    longitude: `${weather.longitude}°E`,
+    timezone: weather.timezone,
+    weatherCode: weather.current.weather_code,
+    temperature: `${weather.current.temperature_2m}`,
+    precipitation: `${weather.current.precipitation}${weather.current_units.precipitation}`,
+    wind_speed_10m: `${weather.current.wind_speed_10m}${weather.current_units.wind_speed_10m}`,
+  };
+};
+
+export const useData = () => {
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getWeatherData = async () => {
+      try {
+        const data = await fetchWeatherData();
+        setWeatherData(data);
+      } catch (err) {
+        setError("Failed to fetch weather data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getWeatherData();
+  }, []);
+
+  return { data: weatherData, loading: !!loading, error: error };
+};
+
+export default useData;

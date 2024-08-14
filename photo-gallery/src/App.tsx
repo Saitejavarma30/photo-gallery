@@ -1,8 +1,9 @@
 import React from "react";
 import ParticleBackground from "./components/Particles";
-import Hero from "./components/Hero";
+import Hero, { StaticImage } from "./components/Hero";
 import { AppContainer } from "./styles";
 import Navbar from "./components/Navbar";
+import { StaticImageContainer } from "./components/Hero/styles";
 
 function App() {
   return (
@@ -12,8 +13,11 @@ function App() {
         <div className="col-span-3 overflow-y-auto h-screen">
           <Navbar />
         </div>
-        <div className="col-span-9 overflow-y-auto h-screen">
+        <div className="col-span-5 overflow-y-auto h-screen">
           <Hero />
+        </div>
+        <div className="col-span-4 overflow-y-auto h-screen">
+          <StaticImage />
         </div>
       </AppContainer>
     </>

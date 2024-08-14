@@ -42,6 +42,6 @@ export const ItemContainer = styled.li`
   }
 `;
 
-export const Anchor = styled.a<{ currentLocation: boolean }>`
-  color: ${(props) => (props.currentLocation ? `${theme.colors.aqua}` : "")};
+export const Anchor = styled.a<{ currentlocation: boolean }>`
+  color: ${(props) => (props.currentlocation ? `${theme.colors.aqua}` : "")};
 `;
